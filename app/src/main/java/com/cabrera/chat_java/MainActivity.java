@@ -1,5 +1,6 @@
 package com.cabrera.chat_java;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -16,10 +17,13 @@ import com.cabrera.chat_java.Fragmentos.FragmentPerfil;
 import com.cabrera.chat_java.Fragmentos.FragmentUsuarios;
 import com.cabrera.chat_java.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         binding= ActivityMainBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if (firebaseAuth.getCurrentUser() == null){
+            irOpcionesLogin();
+        }
 
         verFragmentoPerfil();
 
@@ -61,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void irOpcionesLogin() {
+        startActivity(new Intent(this, OpcionesLoginActivity.class));
+        finishAffinity();
     }
 
     private void verFragmentoPerfil() {

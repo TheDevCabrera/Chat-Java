@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "604852299991",
+    "project_id": "chat-java-b158b",
+    "storage_bucket": "chat-java-b158b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604852299991:android:3258bff413da904e386892",
+        "android_client_info": {
+          "package_name": "com.cabrera.chat_java"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxNlTJFsKS4hOeL61wss_FtW20M--yehA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
