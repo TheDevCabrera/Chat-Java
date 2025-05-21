@@ -12,10 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.cabrera.chat_java.Constantes;
 import com.cabrera.chat_java.OpcionesLoginActivity;
 import com.cabrera.chat_java.R;
 import com.cabrera.chat_java.databinding.FragmentPerfilBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class FragmentPerfil extends Fragment {
 
@@ -47,6 +54,8 @@ public class FragmentPerfil extends Fragment {
 
         firebaseAuth = firebaseAuth.getInstance();
 
+        cargarInformacion();
+
         binding.btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,5 +65,43 @@ public class FragmentPerfil extends Fragment {
                 getActivity().finishAffinity();
             }
         });
+    }
+
+    private void cargarInformacion() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
+        reference.child(firebaseAuth.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String nombres = ""+snapshot.child("nombres").getValue();
+                        String email = ""+snapshot.child("email").getValue();
+                        String proveedor = ""+snapshot.child("proveedor").getValue();
+                        String t_registro = ""+snapshot.child("tiempoR").getValue();
+                        String imagen = ""+snapshot.child("imagen").getValue();
+
+                        if (t_registro.equals("null")){
+                            t_registro = "0";
+                        }
+
+                        String fecha = Constantes.formatoFecha(Long.parseLong(t_registro));
+
+                        /*Setear la información a las vistas*/
+                        binding.tvNombres.setText(nombres);
+                        binding.tvEmail.setText(email);
+                        binding.tvProveedor.setText(proveedor);
+                        binding.tvTRegistro.setText(fecha);
+
+                        /*setear la imagen*/
+                        Glide.with(mContext)
+                                .load(imagen)
+                                .placeholder(R.drawable.ic_img_perfil)
+                                .into(binding.ivPerfil);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }

@@ -133,6 +133,7 @@ public class RegistroEmailActivity extends AppCompatActivity {
         datosUsuario.put("tiempoR", tiempoR);
         datosUsuario.put("proveedor", "Email");
         datosUsuario.put("estado", "Online");
+        datosUsuario.put("imagen", "");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
         reference.child(uidU).setValue(datosUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -169,6 +169,7 @@ public class OpcionesLoginActivity extends AppCompatActivity {
         datosUsuario.put("tiempoR", tiempoR);
         datosUsuario.put("proveedor", "Google");
         datosUsuario.put("estado", "Online");
+        datosUsuario.put("imagen", "");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Usuarios");
         reference.child(uidU).setValue(datosUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {
